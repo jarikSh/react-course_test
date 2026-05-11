@@ -1,0 +1,50 @@
+header {
+  display: grid;
+  grid-template-columns: minmax(min-content, 1fr) repeat(3, auto);
+  padding: 20px 40px;
+  border-bottom: 1px solid #eaeaea;
+
+  .logo {
+    display: grid;
+    grid-template-columns: min-content minmax(0, 1fr);
+    grid-template-rows: repeat(2, auto);
+    column-gap: 10px;
+    text-decoration: none;
+    white-space: nowrap;
+    margin-right: auto;
+
+    img {
+      width: 40px;
+      height: 40px;
+      grid-row: 1/3;
+    }
+
+    .title {
+      text-transform: uppercase;
+      font-weight: 700;
+      font-size: 20px;
+      color: #000000;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .subtitle {
+      font-weight: 400;
+      font-size: 14px;
+      color: #9d9d9d;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .actions {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    align-items: center;
+    column-gap: 15px;
+
+    a > img {
+      display: block;
+    }
+  }
+}

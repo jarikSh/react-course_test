@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "jsx": "react-jsx",
+    "module": "ES2022",
+    "target": "ES2022",
+    "moduleResolution": "node"
+  },
+  "include": ["src"]
+}

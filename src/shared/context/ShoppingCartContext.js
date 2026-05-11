@@ -1,0 +1,132 @@
+import { createContext, useContext, useEffect } from 'react';
+import PropTypes from 'prop-types';
+
+import { CART_ACTION_TYPES, createAction } from 'shared/actions';
+import { useShoppingCartReducer, SHOPPING_CART_STATE } from 'shared/reducers/shoppingCartReducer';
+import axiosInstance from 'shared/utilities/http';
+import { showError } from 'shared/utilities/toast';
+
+const INITIAL_STATE = {
+  isCartOpen: false,
+  setIsCartOpen: (isOpen) => {},
+  cartItems: [],
+  addItemToCart: (product) => {},
+  removeItemFromCart: (productId) => {},
+  checkout: () => {},
+  cartTotal: 0,
+  isDataLoading: true,
+  hasError: false,
+  cartState: SHOPPING_CART_STATE.CART_PRODUCTS,
+  setCartState: (newCartState) => {}
+};
+
+export const ShoppingCartContext = createContext(INITIAL_STATE);
+
+export function useShoppingCart() {
+  const context = useContext(ShoppingCartContext);
+  if (context === undefined) {
+    throw new Error('useShoppingCart must be used within a ShoppingCartProvider');
+  }
+  return context;
+}
+
+export const ShoppingCartProvider = ({ children }) => {
+  const [state, dispatch] = useShoppingCartReducer();
+  const { isCartOpen, cartTotal, cartItems, isDataLoading, hasError, cartState } = state;
+
+  useEffect(() => {
+    dispatch(createAction(CART_ACTION_TYPES.FETCH_CART_INIT));
+
+    const controller = new AbortController();
+
+    axiosInstance
+      .get('/cart', { signal: controller.signal })
+      .then((response) => {
+        dispatch(createAction(CART_ACTION_TYPES.FETCH_CART_SUCCESS, response.data));
+      })
+      .catch((e) => {
+        if (e.code !== 'ERR_CANCELED') {
+          dispatch(createAction(CART_ACTION_TYPES.FETCH_CART_FAILED));
+          showError('An error occurred while loading cart');
+        }
+      });
+
+    return () => {
+      controller.abort();
+    };
+  }, []);
+
+  const addItemToCart = (product) => {
+    const { id, ...newCartObject } = product;
+    axiosInstance
+      .post('/cart', { productId: id, ...newCartObject })
+      .then((response) => {
+        dispatch(createAction(CART_ACTION_TYPES.ADD_TO_CART, response.data));
+      })
+      .catch((error) => {
+        showError('Failed to add product to cart');
+      });
+  };
+
+  const removeItemFromCart = (productId) => {
+    const cartItemToRemove = cartItems.find((item) => item.productId === productId);
+    if (!cartItemToRemove) {
+      return;
+    }
+
+    axiosInstance
+      .delete(`/cart/${cartItemToRemove.id}`)
+      .then((response) => {
+        dispatch(createAction(CART_ACTION_TYPES.REMOVE_FROM_CART, response.data));
+      })
+      .catch((error) => {
+        showError('Failed to remove product from cart');
+      });
+  };
+
+  const setCartState = (newCartState) => {
+    dispatch(createAction(CART_ACTION_TYPES.SET_CART_STATE, newCartState));
+  };
+
+  const checkout = async () => {
+    try {
+      dispatch(createAction(CART_ACTION_TYPES.SET_CART_STATE, SHOPPING_CART_STATE.CART_PROCESSING));
+
+      for (var i = 0; i < cartItems.length; ++i) {
+        await axiosInstance.delete(`/cart/${cartItems[i].id}`);
+      }
+      dispatch(createAction(CART_ACTION_TYPES.SET_CART_STATE, SHOPPING_CART_STATE.CART_DONE));
+    } catch (error) {
+      dispatch(createAction(CART_ACTION_TYPES.SET_CART_STATE, SHOPPING_CART_STATE.CART_ERROR));
+      showError('Failed to process the order.');
+    }
+  };
+
+  const setIsCartOpen = (isOpen) => {
+    if (!isOpen && cartState === SHOPPING_CART_STATE.CART_PROCESSING) {
+      return;
+    }
+
+    dispatch(createAction(CART_ACTION_TYPES.SET_IS_CART_OPEN, isOpen));
+  };
+
+  const value = {
+    isCartOpen,
+    setIsCartOpen,
+    addItemToCart,
+    removeItemFromCart,
+    checkout,
+    cartItems,
+    cartTotal,
+    isDataLoading,
+    hasError,
+    cartState,
+    setCartState
+  };
+
+  return <ShoppingCartContext.Provider value={value}>{children}</ShoppingCartContext.Provider>;
+};
+
+ShoppingCartProvider.propTypes = {
+  children: PropTypes.node.isRequired
+};

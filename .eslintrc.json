@@ -1,0 +1,74 @@
+{
+  "env": {
+    "browser": true,
+    "es2022": true
+  },
+  "extends": [
+    "react-app",
+    "react-app/jest",
+    "eslint:recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
+    "plugin:prettier/recommended",
+    "prettier"
+  ],
+  "overrides": [],
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "plugins": ["prettier"],
+  "rules": {
+    "no-debugger": "warn",
+    "no-console": "warn",
+    "no-unused-vars": "warn",
+    "prefer-const": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        "pathGroups": [
+          { "pattern": "react", "group": "external", "position": "before" },
+          { "pattern": "react-dom", "group": "external", "position": "before" },
+          { "pattern": "prop-types", "group": "external", "position": "before" },
+          { "pattern": "modules/**", "group": "internal", "position": "before" },
+          { "pattern": "shared/**", "group": "internal", "position": "before" },
+          { "pattern": "assets/**", "group": "internal", "position": "before" },
+          { "pattern": "styles/**", "group": "internal", "position": "before" }
+        ],
+        "pathGroupsExcludedImportTypes": ["react", "prop-types", "react-dom"],
+        "newlines-between": "always",
+        "distinctGroup": false,
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ],
+    "spaced-comment": [
+      "error",
+      "always",
+      {
+        "line": {
+          "markers": ["/"],
+          "exceptions": ["-", "+"]
+        },
+        "block": {
+          "markers": ["!"],
+          "exceptions": ["*"],
+          "balanced": true
+        }
+      }
+    ],
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  }
+}

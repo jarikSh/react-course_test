@@ -1,0 +1,23 @@
+.form {
+  padding: 50px 100px 75px 100px;
+  display: flex;
+  flex-direction: column;
+  max-width: 550px;
+  gap: 16px;
+}
+
+.formRow {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+}
+
+.title {
+  margin: 0 auto;
+}
+
+.agreement {
+  div {
+    font-size: 14px;
+  }
+}

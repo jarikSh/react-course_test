@@ -1,0 +1,21 @@
+.searchWrapper {
+  display: flex;
+
+  border: 1px solid #f3f3f3;
+  border-radius: 10px;
+  overflow: hidden;
+  gap: 12px;
+  padding: 0 12px;
+
+  input {
+    font-size: 14px;
+    font-family: inherit;
+    border: none;
+    outline: 0;
+
+    &::placeholder {
+      color: #e4e4e4;
+      opacity: 1;
+    }
+  }
+}
