@@ -120,7 +120,6 @@ ignore:
   - "/node_modules"
   - "/build"
   - "/coverage"
-  - "/public"
   - "*.lock"
   - ".env"
   - ".env.local"
