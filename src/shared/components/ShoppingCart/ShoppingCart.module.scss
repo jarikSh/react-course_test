@@ -126,3 +126,61 @@
     color: #e41919;
   }
 }
+
+.promoCode {
+  width: 100%;
+}
+
+.promoCodeRow {
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: flex-start;
+}
+
+.promoCodeInput {
+  flex: 1;
+}
+
+.promoCodeButton {
+  white-space: nowrap;
+  align-self: flex-start;
+  height: 40px;
+}
+
+.promoCodeApplied {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  background-color: #f0fce8;
+  border: 1px solid #87c20a;
+  border-radius: 4px;
+  padding: 6px 8px;
+}
+
+.promoCodeIcon {
+  color: #87c20a;
+  flex-shrink: 0;
+}
+
+.promoCodeLabel {
+  flex: 1;
+  font-size: 13px;
+  font-weight: 500;
+  color: #3c7700;
+}
+
+.promoCodeRemove {
+  color: #3c7700;
+  padding: 2px;
+}
+
+.promoCodeSuccess {
+  color: #3c7700 !important;
+}
+
+.discountAmount {
+  color: #87c20a;
+  font-weight: 600;
+}

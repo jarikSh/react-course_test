@@ -26,7 +26,9 @@ const options = [
   }
 ];
 
-function ShoppingCartShipping({ cartTotal, cartState, checkout }) {
+function ShoppingCartShipping({ cartTotal, discount, cartState, checkout }) {
+  const finalTotal = cartTotal - discount;
+
   const methods = useForm({
     resolver: yupResolver(shippingSchema),
     defaultValues: {
@@ -74,9 +76,15 @@ function ShoppingCartShipping({ cartTotal, cartState, checkout }) {
               <span>Итого:</span>
               <div>{formatCurrency(cartTotal)}</div>
             </div>
+            {discount > 0 && (
+              <div className={styles.cartSummary}>
+                <span>Скидка:</span>
+                <div className={styles.discountAmount}>−{formatCurrency(discount)}</div>
+              </div>
+            )}
             <div className={styles.cartSummary}>
               <span>Налог 5%:</span>
-              <div>{formatCurrency(cartTotal * 0.05)}</div>
+              <div>{formatCurrency(finalTotal * 0.05)}</div>
             </div>
             <ButtonMain label="Оформить заказ" endIcon={<ArrowForwardIcon />} type="submit" />
           </div>
@@ -95,6 +103,7 @@ function ShoppingCartShipping({ cartTotal, cartState, checkout }) {
 
 ShoppingCartShipping.propTypes = {
   cartTotal: PropTypes.number.isRequired,
+  discount: PropTypes.number.isRequired,
   cartState: PropTypes.string.isRequired,
   checkout: PropTypes.func.isRequired
 };
