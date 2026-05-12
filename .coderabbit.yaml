@@ -1,0 +1,48 @@
+# CodeRabbit Configuration for React Sneakers Project
+# Reference: https://docs.coderabbit.ai/configuration
+
+# Language for review output
+language: en-US
+
+# Review configuration
+reviews:
+  # Enable automatic reviews on PR (boolean: true/false)
+  review_status: true
+  
+  # Path-specific review instructions
+  path_instructions:
+    - path: "src/**/*.js"
+      instructions: |
+        Verify React component structure and hooks usage
+        Check for proper prop validation with PropTypes
+        Ensure state management follows project conventions (Context/useReducer)
+        Review for performance optimizations (useMemo, useCallback)
+        Check for proper error handling and cleanup
+    
+    - path: "src/**/*.scss"
+      instructions: |
+        Ensure SCSS modules use camelCase class names
+        Check for cross-browser compatibility (appearance, vendor prefixes)
+        Verify media queries and responsive design
+        Review for CSS specificity issues
+        Check for consistent color usage and design tokens
+    
+    - path: "src/shared/utilities/**"
+      instructions: |
+        Verify utility functions are pure and side-effect free
+        Check for proper error handling
+        Ensure validation schemas (Yup) are correctly structured
+        Review HTTP client configuration and error handling
+    
+    - path: "src/shared/context/**"
+      instructions: |
+        Verify context providers are properly wrapped in component tree
+        Check for proper cleanup in useEffect hooks
+        Ensure reducer logic is correct and comprehensive
+        Review for unnecessary context re-renders
+  
+  # Review profile: "chill" (minimal) or "assertive" (comprehensive)
+  profile: assertive
+  
+  # Finishing touches (supported schema format)
+  finishing_touches: true
