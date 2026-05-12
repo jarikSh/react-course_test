@@ -6,122 +6,43 @@ language: en-US
 
 # Review configuration
 reviews:
-  # Enable automatic reviews on PR
-  review_status: auto
-  
-  # Path filters to exclude/include files
-  path_filters:
-    exclude:
-      - "node_modules/**"
-      - "build/**"
-      - "dist/**"
-      - ".git/**"
-      - "coverage/**"
-      - "**/*.lock"
-      - "**/*.log"
-      - "**/*.test.js"
-      - "**/*.spec.js"
-      - ".env*"
-    
-    include:
-      - "src/**/*.js"
-      - "src/**/*.jsx"
-      - "src/**/*.scss"
-      - "package.json"
-      - ".coderabbit.yaml"
-  
-  # Review profile settings
-  profile: comprehensive
-  max_files: 30
-  
-  # Finishing touches and suggestions
-  finishing_touches:
-    - description: "Check for React best practices (hooks, prop-types, memoization)"
-      enabled: true
-    
-    - description: "Verify cross-browser CSS compatibility for button and form styles"
-      enabled: true
-    
-    - description: "Ensure accessibility standards (ARIA, semantic HTML)"
-      enabled: true
-    
-    - description: "Review state management patterns (Context, useReducer)"
-      enabled: true
-    
-    - description: "Check for performance optimizations and re-render prevention"
-      enabled: true
-    
-    - description: "Validate SCSS module naming conventions (camelCase)"
-      enabled: true
+  # Enable automatic reviews on PR (boolean: true/false)
+  review_status: true
   
   # Path-specific review instructions
   path_instructions:
-    - pattern: "src/**/*.js"
+    - path: "src/**/*.js"
       instructions: |
-        - Verify React component structure and hooks usage
-        - Check for proper prop validation with PropTypes
-        - Ensure state management follows project conventions (Context/useReducer)
-        - Review for performance optimizations (useMemo, useCallback)
-        - Check for proper error handling and cleanup
+        Verify React component structure and hooks usage
+        Check for proper prop validation with PropTypes
+        Ensure state management follows project conventions (Context/useReducer)
+        Review for performance optimizations (useMemo, useCallback)
+        Check for proper error handling and cleanup
     
-    - pattern: "src/**/*.scss"
+    - path: "src/**/*.scss"
       instructions: |
-        - Ensure SCSS modules use camelCase class names
-        - Check for cross-browser compatibility (appearance, vendor prefixes)
-        - Verify media queries and responsive design
-        - Review for CSS specificity issues
-        - Check for consistent color usage and design tokens
+        Ensure SCSS modules use camelCase class names
+        Check for cross-browser compatibility (appearance, vendor prefixes)
+        Verify media queries and responsive design
+        Review for CSS specificity issues
+        Check for consistent color usage and design tokens
     
-    - pattern: "src/shared/utilities/**"
+    - path: "src/shared/utilities/**"
       instructions: |
-        - Verify utility functions are pure and side-effect free
-        - Check for proper error handling
-        - Ensure validation schemas (Yup) are correctly structured
-        - Review HTTP client configuration and error handling
+        Verify utility functions are pure and side-effect free
+        Check for proper error handling
+        Ensure validation schemas (Yup) are correctly structured
+        Review HTTP client configuration and error handling
     
-    - pattern: "src/shared/context/**"
+    - path: "src/shared/context/**"
       instructions: |
-        - Verify context providers are properly wrapped in component tree
-        - Check for proper cleanup in useEffect hooks
-        - Ensure reducer logic is correct and comprehensive
-        - Review for unnecessary context re-renders
-
-# Tools configuration
-tools:
-  # AST-grep for custom pattern detection
-  ast-grep:
-    enabled: true
-    rules:
-      - id: "no-hardcoded-api-url"
-        pattern: '"https://64467a05ee791e1e2900454d.mockapi.io"'
-        message: "Avoid hardcoded API URLs; use environment variables instead"
-        severity: "warning"
-      
-      - id: "missing-abort-controller"
-        pattern: "axiosInstance.get|axiosInstance.post"
-        message: "Verify AbortController is used for request cleanup"
-        severity: "info"
-      
-      - id: "button-without-type"
-        pattern: '<button(?!.*type)'
-        message: "Button should have explicit type attribute (submit/button/reset)"
-        severity: "warning"
-
-# AI model selection
-model: claude-opus
-
-# Review quality settings
-quality:
-  # Focus areas for review
-  focus_areas:
-    - "react_best_practices"
-    - "cross_browser_compatibility"
-    - "accessibility"
-    - "performance"
-    - "security"
+        Verify context providers are properly wrapped in component tree
+        Check for proper cleanup in useEffect hooks
+        Ensure reducer logic is correct and comprehensive
+        Review for unnecessary context re-renders
   
-  # Include relevant code context
-  include_context: true
+  # Review profile: "chill" (minimal) or "assertive" (comprehensive)
+  profile: assertive
   
-  # Suggest improvements and refactoring
-  suggest_improvements: true
+  # Finishing touches (supported schema format)
+  finishing_touches: true
