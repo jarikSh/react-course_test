@@ -99,15 +99,6 @@ commits:
   convention: "conventional"
   requireScope: true
   requireDescription: true
-  scopes:
-    - "feat"
-    - "fix"
-    - "docs"
-    - "style"
-    - "refactor"
-    - "test"
-    - "chore"
-  
   examples:
     - "feat(card): add product image optimization"
     - "fix(styles): resolve cross-browser button styling issues"
