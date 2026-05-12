@@ -1,146 +1,127 @@
 # CodeRabbit Configuration for React Sneakers Project
+# Reference: https://docs.coderabbit.ai/configuration
 
-# Project information
-projectName: react-course-test
-language: typescript-javascript
-frameworks:
-  - react
-  - cra
+# Language for review output
+language: en-US
 
 # Review configuration
-review:
-  # Auto-review on pull requests
-  automatic: true
+reviews:
+  # Enable automatic reviews on PR
+  review_status: auto
   
-  # Prioritize files to review
-  priorityFiles:
-    - "src/**/*.js"
-    - "src/**/*.jsx"
-    - "src/**/*.scss"
-    - "package.json"
-    - "public/**"
+  # Path filters to exclude/include files
+  path_filters:
+    exclude:
+      - "node_modules/**"
+      - "build/**"
+      - "dist/**"
+      - ".git/**"
+      - "coverage/**"
+      - "**/*.lock"
+      - "**/*.log"
+      - "**/*.test.js"
+      - "**/*.spec.js"
+      - ".env*"
+    
+    include:
+      - "src/**/*.js"
+      - "src/**/*.jsx"
+      - "src/**/*.scss"
+      - "package.json"
+      - ".coderabbit.yaml"
   
-  # Files to skip in review
-  skip:
-    - "**/*.test.js"
-    - "**/*.spec.js"
-    - "node_modules/**"
-    - "build/**"
-    - ".git/**"
-    - "coverage/**"
-    - "*.lock"
-    - "*.log"
+  # Review profile settings
+  profile: comprehensive
+  max_files: 30
   
-  # Review options
-  reviewType: "comprehensive"
-  maxFiles: 30
+  # Finishing touches and suggestions
+  finishing_touches:
+    - description: "Check for React best practices (hooks, prop-types, memoization)"
+      enabled: true
+    
+    - description: "Verify cross-browser CSS compatibility for button and form styles"
+      enabled: true
+    
+    - description: "Ensure accessibility standards (ARIA, semantic HTML)"
+      enabled: true
+    
+    - description: "Review state management patterns (Context, useReducer)"
+      enabled: true
+    
+    - description: "Check for performance optimizations and re-render prevention"
+      enabled: true
+    
+    - description: "Validate SCSS module naming conventions (camelCase)"
+      enabled: true
+  
+  # Path-specific review instructions
+  path_instructions:
+    - pattern: "src/**/*.js"
+      instructions: |
+        - Verify React component structure and hooks usage
+        - Check for proper prop validation with PropTypes
+        - Ensure state management follows project conventions (Context/useReducer)
+        - Review for performance optimizations (useMemo, useCallback)
+        - Check for proper error handling and cleanup
+    
+    - pattern: "src/**/*.scss"
+      instructions: |
+        - Ensure SCSS modules use camelCase class names
+        - Check for cross-browser compatibility (appearance, vendor prefixes)
+        - Verify media queries and responsive design
+        - Review for CSS specificity issues
+        - Check for consistent color usage and design tokens
+    
+    - pattern: "src/shared/utilities/**"
+      instructions: |
+        - Verify utility functions are pure and side-effect free
+        - Check for proper error handling
+        - Ensure validation schemas (Yup) are correctly structured
+        - Review HTTP client configuration and error handling
+    
+    - pattern: "src/shared/context/**"
+      instructions: |
+        - Verify context providers are properly wrapped in component tree
+        - Check for proper cleanup in useEffect hooks
+        - Ensure reducer logic is correct and comprehensive
+        - Review for unnecessary context re-renders
 
-# Code style and best practices
-codeStyle:
-  language: javascript
-  framework: react
-  linter: eslint
-  formatter: prettier
-  
-  rules:
-    - name: "React Hooks Usage"
-      description: "Ensure proper use of useState, useContext, useEffect, and custom hooks"
-      severity: "high"
-    
-    - name: "Component Structure"
-      description: "Verify functional components with proper prop validation using PropTypes"
-      severity: "high"
-    
-    - name: "State Management"
-      description: "Check Context API and useReducer patterns for state management"
-      severity: "high"
-    
-    - name: "SCSS Module Naming"
-      description: "Ensure SCSS module classes follow camelCase naming convention"
-      severity: "medium"
-    
-    - name: "Performance"
-      description: "Check for unnecessary re-renders and optimized memoization"
-      severity: "medium"
-    
-    - name: "Accessibility"
-      description: "Verify ARIA labels and semantic HTML usage"
-      severity: "medium"
-    
-    - name: "Browser Compatibility"
-      description: "Check cross-browser CSS compatibility, especially for button and form styles"
-      severity: "high"
-    
-    - name: "Import Conventions"
-      description: "Verify absolute imports follow project convention (baseUrl: src)"
-      severity: "low"
+# Tools configuration
+tools:
+  # AST-grep for custom pattern detection
+  ast-grep:
+    enabled: true
+    rules:
+      - id: "no-hardcoded-api-url"
+        pattern: '"https://64467a05ee791e1e2900454d.mockapi.io"'
+        message: "Avoid hardcoded API URLs; use environment variables instead"
+        severity: "warning"
+      
+      - id: "missing-abort-controller"
+        pattern: "axiosInstance.get|axiosInstance.post"
+        message: "Verify AbortController is used for request cleanup"
+        severity: "info"
+      
+      - id: "button-without-type"
+        pattern: '<button(?!.*type)'
+        message: "Button should have explicit type attribute (submit/button/reset)"
+        severity: "warning"
 
-# Suggestions and improvements
-suggestions:
-  enabled: true
-  categories:
-    - "performance"
-    - "maintainability"
-    - "readability"
-    - "security"
-    - "testing"
+# AI model selection
+model: claude-opus
+
+# Review quality settings
+quality:
+  # Focus areas for review
+  focus_areas:
+    - "react_best_practices"
+    - "cross_browser_compatibility"
     - "accessibility"
+    - "performance"
+    - "security"
   
-  # Specific suggestions for this project
-  projectSpecific:
-    - "Consider extracting complex JSX into subcomponents for better readability"
-    - "Verify form validation schemas (Yup) are correctly structured"
-    - "Check API calls use proper AbortController for cleanup"
-    - "Ensure toast notifications are properly handled for user feedback"
-    - "Validate Redux-like reducer logic and action types"
-
-# Commit message linting
-commits:
-  convention: "conventional"
-  requireScope: true
-  requireDescription: true
-  examples:
-    - "feat(card): add product image optimization"
-    - "fix(styles): resolve cross-browser button styling issues"
-    - "docs(readme): update installation instructions"
-    - "refactor(context): simplify shopping cart reducer logic"
-
-# Ignore patterns
-ignore:
-  - "/.git"
-  - "/node_modules"
-  - "/build"
-  - "/coverage"
-  - "*.lock"
-  - ".env"
-  - ".env.local"
-
-# Feedback preferences
-feedback:
-  tone: "constructive"
-  includeExamples: true
-  suggestTests: true
-  highlightSecurity: true
-  checkPerformance: true
-
-# Project-specific settings
-customRules:
-  - name: "Avoid hardcoded API URLs"
-    description: "API base URLs should be configured via environment variables"
-    pattern: "https://64467a05ee791e1e2900454d.mockapi.io"
-    severity: "medium"
+  # Include relevant code context
+  include_context: true
   
-  - name: "Check context provider usage"
-    description: "Ensure context providers are properly wrapped in component tree"
-    pattern: "useContext|Provider"
-    severity: "high"
-  
-  - name: "Validate SCSS module imports"
-    description: "Verify SCSS modules are imported with correct naming pattern"
-    pattern: "import.*module.scss"
-    severity: "medium"
-  
-  - name: "Check button accessibility"
-    description: "Ensure buttons have proper aria-labels or descriptive content"
-    pattern: "<button"
-    severity: "medium"
+  # Suggest improvements and refactoring
+  suggest_improvements: true
