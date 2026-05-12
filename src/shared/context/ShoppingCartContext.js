@@ -64,7 +64,13 @@ export const ShoppingCartProvider = ({ children }) => {
         if (savedPromo) {
           try {
             const promo = JSON.parse(savedPromo);
-            dispatch(createAction(CART_ACTION_TYPES.APPLY_PROMO_CODE, promo));
+            const cartTotal = response.data.reduce((sum, item) => sum + item.price, 0);
+            const validation = validatePromoCode(promo.code, cartTotal);
+            if (validation.valid) {
+              dispatch(createAction(CART_ACTION_TYPES.APPLY_PROMO_CODE, promo));
+            } else {
+              localStorage.removeItem(PROMO_CODE_STORAGE_KEY);
+            }
           } catch {
             localStorage.removeItem(PROMO_CODE_STORAGE_KEY);
           }
