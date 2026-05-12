@@ -36,5 +36,10 @@
     grid-row: 1 / 3;
     grid-column: button-start / button-end;
     align-self: center;
+    background: #fff;
+    border: 1px solid #f2f2f2;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
   }
 }

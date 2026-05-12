@@ -32,23 +32,34 @@
   width: 32px;
   height: 32px;
   border-radius: 7px;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid #f2f2f2;
   outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  box-shadow: none;
   transition: box-shadow 0.2s;
   cursor: pointer;
 
   &:hover {
     box-shadow: 0 5px 8px rgba(#000, 0.2);
+    background: #fff;
+    border-color: #e0e0e0;
   }
 
   &:active,
   &:focus {
     box-shadow: 0 2px 5px rgba(#000, 0.2);
+    background: #fff;
+    border-color: #d0d0d0;
   }
 
   img {
     width: 14px;
     height: 100%;
+    background: none;
+    border: none;
+    box-shadow: none;
   }
 }
