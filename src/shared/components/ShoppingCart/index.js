@@ -10,6 +10,10 @@ function ShoppingCart() {
   const {
     cartItems,
     cartTotal,
+    discount,
+    appliedPromoCode,
+    applyPromoCode,
+    removePromoCode,
     setIsCartOpen,
     removeItemFromCart,
     checkout,
@@ -24,6 +28,10 @@ function ShoppingCart() {
           <ShoppingCartItems
             cartItems={cartItems}
             cartTotal={cartTotal}
+            discount={discount}
+            appliedPromoCode={appliedPromoCode}
+            applyPromoCode={applyPromoCode}
+            removePromoCode={removePromoCode}
             setCartState={setCartState}
             removeItemFromCart={removeItemFromCart}
           />
@@ -35,7 +43,12 @@ function ShoppingCart() {
     case SHOPPING_CART_STATE.CART_SHIPPING:
     case SHOPPING_CART_STATE.CART_PROCESSING:
       return (
-        <ShoppingCartShipping cartTotal={cartTotal} cartState={cartState} checkout={checkout} />
+        <ShoppingCartShipping
+          cartTotal={cartTotal}
+          discount={discount}
+          cartState={cartState}
+          checkout={checkout}
+        />
       );
     case SHOPPING_CART_STATE.CART_DONE:
     case SHOPPING_CART_STATE.CART_ERROR:

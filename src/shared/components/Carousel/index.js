@@ -18,12 +18,12 @@ function Carousel() {
 
         <img src={carouselImageMain} alt="Carousel" />
       </div>
-      <a className={styles.prev}>
+      <button type="button" className={styles.prev}>
         <img src={arrowLeft} alt="prev" />
-      </a>
-      <a className={styles.next}>
+      </button>
+      <button type="button" className={styles.next}>
         <img src={arrowRight} alt="next" />
-      </a>
+      </button>
     </div>
   );
 }
