@@ -1,0 +1,156 @@
+# CodeRabbit Configuration for React Sneakers Project
+
+# Project information
+projectName: react-course-test
+language: typescript-javascript
+frameworks:
+  - react
+  - cra
+
+# Review configuration
+review:
+  # Auto-review on pull requests
+  automatic: true
+  
+  # Prioritize files to review
+  priorityFiles:
+    - "src/**/*.js"
+    - "src/**/*.jsx"
+    - "src/**/*.scss"
+    - "package.json"
+    - "public/**"
+  
+  # Files to skip in review
+  skip:
+    - "**/*.test.js"
+    - "**/*.spec.js"
+    - "node_modules/**"
+    - "build/**"
+    - ".git/**"
+    - "coverage/**"
+    - "*.lock"
+    - "*.log"
+  
+  # Review options
+  reviewType: "comprehensive"
+  maxFiles: 30
+
+# Code style and best practices
+codeStyle:
+  language: javascript
+  framework: react
+  linter: eslint
+  formatter: prettier
+  
+  rules:
+    - name: "React Hooks Usage"
+      description: "Ensure proper use of useState, useContext, useEffect, and custom hooks"
+      severity: "high"
+    
+    - name: "Component Structure"
+      description: "Verify functional components with proper prop validation using PropTypes"
+      severity: "high"
+    
+    - name: "State Management"
+      description: "Check Context API and useReducer patterns for state management"
+      severity: "high"
+    
+    - name: "SCSS Module Naming"
+      description: "Ensure SCSS module classes follow camelCase naming convention"
+      severity: "medium"
+    
+    - name: "Performance"
+      description: "Check for unnecessary re-renders and optimized memoization"
+      severity: "medium"
+    
+    - name: "Accessibility"
+      description: "Verify ARIA labels and semantic HTML usage"
+      severity: "medium"
+    
+    - name: "Browser Compatibility"
+      description: "Check cross-browser CSS compatibility, especially for button and form styles"
+      severity: "high"
+    
+    - name: "Import Conventions"
+      description: "Verify absolute imports follow project convention (baseUrl: src)"
+      severity: "low"
+
+# Suggestions and improvements
+suggestions:
+  enabled: true
+  categories:
+    - "performance"
+    - "maintainability"
+    - "readability"
+    - "security"
+    - "testing"
+    - "accessibility"
+  
+  # Specific suggestions for this project
+  projectSpecific:
+    - "Consider extracting complex JSX into subcomponents for better readability"
+    - "Verify form validation schemas (Yup) are correctly structured"
+    - "Check API calls use proper AbortController for cleanup"
+    - "Ensure toast notifications are properly handled for user feedback"
+    - "Validate Redux-like reducer logic and action types"
+
+# Commit message linting
+commits:
+  convention: "conventional"
+  requireScope: true
+  requireDescription: true
+  scopes:
+    - "feat"
+    - "fix"
+    - "docs"
+    - "style"
+    - "refactor"
+    - "test"
+    - "chore"
+  
+  examples:
+    - "feat(card): add product image optimization"
+    - "fix(styles): resolve cross-browser button styling issues"
+    - "docs(readme): update installation instructions"
+    - "refactor(context): simplify shopping cart reducer logic"
+
+# Ignore patterns
+ignore:
+  - "/.git"
+  - "/node_modules"
+  - "/build"
+  - "/coverage"
+  - "/public"
+  - "*.lock"
+  - ".env"
+  - ".env.local"
+
+# Feedback preferences
+feedback:
+  tone: "constructive"
+  includeExamples: true
+  suggestTests: true
+  highlightSecurity: true
+  checkPerformance: true
+
+# Project-specific settings
+customRules:
+  - name: "Avoid hardcoded API URLs"
+    description: "API base URLs should be configured via environment variables"
+    pattern: "https://64467a05ee791e1e2900454d.mockapi.io"
+    severity: "medium"
+  
+  - name: "Check context provider usage"
+    description: "Ensure context providers are properly wrapped in component tree"
+    pattern: "useContext|Provider"
+    severity: "high"
+  
+  - name: "Validate SCSS module imports"
+    description: "Verify SCSS modules are imported with correct naming pattern"
+    pattern: "import.*module.scss"
+    severity: "medium"
+  
+  - name: "Check button accessibility"
+    description: "Ensure buttons have proper aria-labels or descriptive content"
+    pattern: "<button"
+    severity: "medium"
